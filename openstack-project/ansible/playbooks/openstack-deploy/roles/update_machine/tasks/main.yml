@@ -1,5 +1,14 @@
 ---
 
+- name: Install packages
+  apt:
+    name: 
+      - net-tools
+      - git
+      - ansible
+      - mlocate
+    state: latest
+
 - name: Update all packages
   apt:
     name: '*'
