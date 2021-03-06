@@ -1,0 +1,13 @@
+---
+
+- name: Deploy an openstack instance
+  hosts: local
+  remote_user: ubuntu
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  roles:
+    - machine_setup
+...
