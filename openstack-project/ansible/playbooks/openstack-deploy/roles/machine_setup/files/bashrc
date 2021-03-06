@@ -122,6 +122,7 @@ alias freshclam='sudo freshclam'
 alias vi='vim'
 alias svi='sudo vi'
 alias vis='vim "+set si"'
+alias ansible-playbook='ansible-playbook site.yml'
 
 # Change directory aliases
 alias home='cd ~'

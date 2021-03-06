@@ -5,13 +5,13 @@
 20.0.0.40 machine=storage
 
 [local]
-20.0.0.10
+20.0.0.10 machine=management
 
 [controller]
-20.0.0.20
+20.0.0.20 machine=controller
 
 [compute]
-20.0.0.30
+20.0.0.30 machine=compute
 
 [storage]
-20.0.0.40
+20.0.0.40 machine=storage

@@ -1,8 +1,13 @@
-update: false
+update: true
 
 username: group10
 password: p@ssw0rd
 
-user_update: true
-bashrc_update: true
-sshd_update: true
+user_update: false
+bashrc_update: false
+sshd_update: false
+iptables_flush: true
+iptables_setup: true
+gateway_setup: false
+
+management_ip: "20.0.0.10"

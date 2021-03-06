@@ -5,7 +5,7 @@
     name: root
     password: "{{ password | password_hash('sha512') }}"
     state: present 
-  when: user_update | bool
+  when: user_update | bool 
 
 - name: Update root user .bashrc file
   copy:
@@ -55,5 +55,39 @@
     name: sshd
     state: restarted
   when: sshd_update | bool
+
+- name: Flush iptables
+  iptables:
+    flush: yes
+  when: machine == "management" and iptables_flush | bool
+
+- name: Setup forwarding in iptables
+  iptables:
+    chain: FORWARD
+    in_interface: ens4
+    out_interface: ens3
+    match: state
+    ctstate: RELATED,ESTABLISHED
+    jump: ACCEPT
+  when: machine == "management" and iptables_setup | bool
+
+- name: Setup nat in iptables
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: ens4
+    jump: MASQUERADE
+  when: machine == "management" and iptables_setup | bool
+
+- name: Enabling packet forwarding
+  copy:
+    src: ip_forward
+    dest: /proc/sys/net/ipv4/ip_forward
+  when: machine  == "management" and iptables_setup | bool
+
+- name: Setup gateway on machines
+  shell: ip route add default via "{{ management_ip }}"
+  when: machine != "management" and gateway_setup | bool
+
 ...
 

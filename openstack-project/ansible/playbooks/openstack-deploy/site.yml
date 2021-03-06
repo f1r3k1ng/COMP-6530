@@ -9,7 +9,7 @@
     - vars.yml
 
   roles:
-    - update_machine
     - machine_setup
+    - update_machine
 
 ...
