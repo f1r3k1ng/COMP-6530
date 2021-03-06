@@ -1,21 +1,59 @@
 ---
 
-- name: Update all packages
-  apt:
-    name: '*'
-    update_cache: yes
-    state: latest
+- name: Change root user password
+  user:
+    name: root
+    password: "{{ password | password_hash('sha512') }}"
+    state: present 
+  when: user_update | bool
 
-- name: Upgrade all packages
-  apt:
-    upgrade: full
+- name: Update root user .bashrc file
+  copy:
+    src: bashrc
+    dest: /root/.bashrc
+    owner: root
+  when: bashrc_update | bool
 
-- name: Add user "{{ username }}"
+- name: Change ubuntu user password
+  user:
+    name: ubuntu
+    password: "{{ password | password_hash('sha512') }}"
+    state: present
+  when: user_update | bool
+
+- name: Update ubuntu user .bashrc file
+  copy:
+    src: bashrc
+    dest: /home/ubuntu/.bashrc
+    owner: ubuntu
+  when: bashrc_update | bool
+
+- name: Add user {{ username }}
   user:
     name: "{{ username }}"
     shell: /bin/bash
     group: sudo
-    password: "{{ password }}"
-    state: present  
+    password: "{{ password | password_hash('sha512') }}"
+    state: present 
+  when: user_update | bool
+
+- name: Update {{ username }} user .bashrc file
+  copy:
+    src: bashrc
+    dest: "/home/{{ username }}/.bashrc"
+    owner: "{{ username }}"
+  when: bashrc_update | bool
+
+- name: Update the sshd config
+  copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+  when: sshd_update | bool
+
+- name: Restarting sshd
+  service:
+    name: sshd
+    state: restarted
+  when: sshd_update | bool
 ...
 

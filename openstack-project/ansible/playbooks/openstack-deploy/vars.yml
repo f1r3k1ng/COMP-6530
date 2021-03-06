@@ -1,2 +1,8 @@
+update: false
+
 username: group10
-passsword: p@ssw0rd
+password: p@ssw0rd
+
+user_update: true
+bashrc_update: true
+sshd_update: true

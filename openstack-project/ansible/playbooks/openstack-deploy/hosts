@@ -1,8 +1,8 @@
 [all]
-20.0.0.10
-20.0.0.20
-20.0.0.30
-20.0.0.40
+20.0.0.10 machine=management
+20.0.0.20 machine=controller
+20.0.0.30 machine=compute
+20.0.0.40 machine=storage
 
 [local]
 20.0.0.10
