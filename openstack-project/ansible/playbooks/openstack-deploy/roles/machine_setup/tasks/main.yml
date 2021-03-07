@@ -44,6 +44,11 @@
     owner: "{{ username }}"
   when: bashrc_update | bool
 
+- name: Set correct timezone
+  timezone:
+    name: America/Chicago
+    hwclock: local
+
 - name: Update the sshd config
   copy:
     src: sshd_config
@@ -85,9 +90,6 @@
     dest: /proc/sys/net/ipv4/ip_forward
   when: machine  == "management" and iptables_setup | bool
 
-- name: Setup gateway on machines
-  shell: ip route add default via "{{ management_ip }}"
-  when: machine != "management" and gateway_setup | bool
 
 ...
 

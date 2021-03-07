@@ -6,8 +6,8 @@ password: p@ssw0rd
 user_update: false
 bashrc_update: false
 sshd_update: false
-iptables_flush: true
-iptables_setup: true
+iptables_flush: false
+iptables_setup: false
 gateway_setup: false
 
 management_ip: "20.0.0.10"
