@@ -1,0 +1,30 @@
+---
+
+- name: Output warning
+  debug:
+    msg: "**WARNING** A network bridge must be setup on the remote host before running this role"
+
+- name: Wait 10 seconds
+  wait_for:
+    timeout: 10
+
+- name: Create veth pairs
+  shell: "ip link add dev veth0 type veth peer name veth1"
+  ignore_errors: yes
+  when: machine == "controller" or machine == "compute"
+
+- name: Set the mtu for both veth interfaces
+  shell: "ip link set dev veth0 mtu 1400 && ip link set dev veth1 mtu 1400"
+  ignore_errors: yes
+  when: machine == "controller" or machine == "compute"
+
+- name: Add veth0 to the bridge
+  shell: "brctl addif br0 veth0"
+  ignore_errors: yes
+  when: machine == "controller" or machine == "compute"
+
+- name: Open the veth interfaces
+  shell: "ip link set dev veth0 up && ip link set dev veth1 up"
+  ignore_errors: yes
+  when: machine == "controller" or machine == "compute"
+...

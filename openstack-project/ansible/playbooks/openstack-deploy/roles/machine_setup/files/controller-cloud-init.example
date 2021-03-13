@@ -1,0 +1,36 @@
+#################################################################################################################################
+###  This file is an example of what your 50-cloud-init.yml file should look like mirror this file with your own information  ###
+#################################################################################################################################
+
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    version: 2
+    bridges:
+        br0:
+            interfaces: [ens3]
+            addresses: [20.0.0.20/24]
+            gateway4: 20.0.0.10
+            mtu: 1400
+            nameservers: 
+                addresses: [8.8.8.8]
+    ethernets:
+        ens3:
+            macaddress: fa:16:3e:fd:49:fb
+        ens4:
+            dhcp4: true
+            addresses: [20.0.0.30/24]
+            match:
+                macaddress: fa:16:3e:11:fe:ba
+            mtu: 1400
+            set-name: ens4
+        ens5:
+            dhcp4: true
+            addresses: [20.0.0.40/24]
+            match:
+                macaddress: fa:16:3e:6d:7d:ae
+            mtu: 1400
+            set-name: ens5

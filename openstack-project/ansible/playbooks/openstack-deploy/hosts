@@ -1,17 +1,17 @@
 [all]
-20.0.0.10 machine=management machine_internal_ip=20.0.0.10
-20.0.0.20 machine=controller machine_internal_ip=20.0.0.20
-20.0.0.30 machine=compute machine_internal_ip=20.0.0.30
-20.0.0.40 machine=storage machine_internal_ip=20.0.0.40
+30.0.0.10 machine=management machine_internal_ip=20.0.0.10
+30.0.0.20 machine=controller machine_internal_ip=20.0.0.20
+30.0.0.30 machine=compute machine_internal_ip=20.0.0.30
+30.0.0.40 machine=storage machine_internal_ip=20.0.0.40
 
 [local]
-20.0.0.10 machine=management machine_internal_ip=20.0.0.10
+30.0.0.10 machine=management machine_internal_ip=20.0.0.10
 
 [controller]
-20.0.0.20 machine=controller machine_internal_ip=20.0.0.20
+30.0.0.20 machine=controller machine_internal_ip=20.0.0.20
 
 [compute]
-20.0.0.30 machine=compute machine_internal_ip=20.0.0.30
+30.0.0.30 machine=compute machine_internal_ip=20.0.0.30
 
 [storage]
-20.0.0.40 machine=storage machine_internal_ip=20.0.0.40
+30.0.0.40 machine=storage machine_internal_ip=20.0.0.40

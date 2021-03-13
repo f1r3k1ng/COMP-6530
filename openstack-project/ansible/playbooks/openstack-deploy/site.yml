@@ -11,6 +11,7 @@
   roles:
     - machine_setup
     - update_machine
+    - veth_pairs
     - docker
 
 ...

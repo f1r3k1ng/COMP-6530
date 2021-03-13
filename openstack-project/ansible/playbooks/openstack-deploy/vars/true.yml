@@ -11,4 +11,6 @@ iptables_setup: true
 gateway_setup: true
 bridge_setup: true
 
+veth: true
+
 management_ip: "20.0.0.10"
