@@ -9,5 +9,6 @@ sshd_update: false
 iptables_flush: false
 iptables_setup: false
 gateway_setup: false
+bridge_setup: false
 
 management_ip: "20.0.0.10"

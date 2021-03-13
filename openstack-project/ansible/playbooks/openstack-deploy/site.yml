@@ -6,10 +6,11 @@
   become: yes
 
   vars_files:
-    - vars.yml
+    - "vars/false.yml"
 
   roles:
     - machine_setup
     - update_machine
+    - docker
 
 ...

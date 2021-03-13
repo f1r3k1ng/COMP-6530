@@ -90,6 +90,42 @@
     dest: /proc/sys/net/ipv4/ip_forward
   when: machine  == "management" and iptables_setup | bool
 
+- name: Create a bridge
+  shell: brctl addbr br0
+  when: machine != "management" and bridge_setup | bool
+  ignore_errors: yes
 
+- name: Create veth pairs
+  shell: ip link add veth0 type veth peer name veth1
+  when: machine != "management" and machine != "storage" and bridge_setup | bool
+  ignore_errors: yes
+
+- name: Configure mtu for interfaces
+  shell: ifconfig veth0 mtu 1400 && ifconfig veth1 mtu 1400 && ifconfig br0 mtu 1400
+  when: machine != "management" and machine != "storage" and bridge_setup | bool
+
+- name: Configure mtu for bridge interface
+  shell: ifconfig br0 mtu 1400
+  when: machine == "storage"
+
+- name: Set bridge ip
+  shell: ifconfig br0 "{{ machine_internal_ip }}" 
+  when: machine != "management" and machine != "storage"
+  ignore_errors: yes
+
+- name: Add interface to bridge
+  shell: brctl addif br0 ens3
+  when: machine != "management" and machine != "storage"
+  ignore_errors: yes
+
+- name: Add veth interface to bridge
+  shell: brctl addif br0 veth0  
+  when: machine != "management" and machine != "storage"
+  ignore_errors: yes
+
+- name: Flush interface ip
+  shell: ip addr flush ens3
+  when: machine != "management" and machine != "storage"
+  ignore_errors: yes
 ...
 

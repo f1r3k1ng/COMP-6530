@@ -1,0 +1,80 @@
+---
+
+- name: Install docker required system packages
+  apt:
+    name: 
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - virtualenv
+      - python3-setuptools
+      - gnupg-agent
+    update_cache: yes
+    state: latest
+
+- name: Add docker GPG apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Get ubuntu version
+  shell: lsb_release -cs
+  register: version
+
+- name: Add docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu "{{ version.stdout }}" stable
+    state: present
+
+- name: Install docker
+  apt:
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    update_cache: yes
+    state: latest
+
+- name: Install docker-compose
+  apt:
+    name:
+      - docker-compose
+    update_cache: yes
+    state: latest
+
+- name: Add ubuntu user to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
+- name: Copy over the registry-daemon.json to change the mtu
+  copy:
+    src: registry-daemon.json
+    dest: /etc/docker/daemon.json
+  when: machine == "management"
+
+- name: Copy over daemon.json to add registry
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+  when: machine != "management"
+
+- name: Restart docker
+  systemd:
+    name: docker
+    daemon-reload: yes
+    state: restarted
+
+- name: Setup docker registry
+  docker_container:
+    name: registry
+    image: registry:2
+    state: started
+    restart_policy: always
+    published_ports: 
+      - 4000:5000  
+    volumes: /home/ubuntu/registry:/var/lib/registry
+  when: machine == "management"
+...
