@@ -6,12 +6,12 @@
   become: yes
 
   vars_files:
-    - "vars/false.yml"
+    - "vars/vars.yml"
 
   roles:
     - machine_setup
-    - update_machine
-    - veth_pairs
+    - update
+    - veth
     - docker
 
 ...

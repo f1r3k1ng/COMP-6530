@@ -12,7 +12,6 @@
     src: bashrc
     dest: /root/.bashrc
     owner: root
-  when: bashrc_update | bool
 
 - name: Change ubuntu user password
   user:
@@ -26,7 +25,6 @@
     src: bashrc
     dest: /home/ubuntu/.bashrc
     owner: ubuntu
-  when: bashrc_update | bool
 
 - name: Add user {{ username }}
   user:
@@ -42,7 +40,6 @@
     src: bashrc
     dest: "/home/{{ username }}/.bashrc"
     owner: "{{ username }}"
-  when: bashrc_update | bool
 
 - name: Set correct timezone
   timezone:
@@ -53,18 +50,16 @@
   copy:
     src: sshd_config
     dest: /etc/ssh/sshd_config
-  when: sshd_update | bool
 
 - name: Restarting sshd
   service:
     name: sshd
     state: restarted
-  when: sshd_update | bool
 
 - name: Flush iptables
   iptables:
     flush: yes
-  when: machine == "management" and iptables_flush | bool
+  when: machine == "management" and nat | bool
 
 - name: Setup forwarding in iptables
   iptables:
@@ -74,7 +69,7 @@
     match: state
     ctstate: RELATED,ESTABLISHED
     jump: ACCEPT
-  when: machine == "management" and iptables_setup | bool
+  when: machine == "management" and nat | bool
 
 - name: Setup nat in iptables
   iptables:
@@ -82,13 +77,13 @@
     chain: POSTROUTING
     out_interface: ens4
     jump: MASQUERADE
-  when: machine == "management" and iptables_setup | bool
+  when: machine == "management" and nat | bool
 
 - name: Enabling packet forwarding
   copy:
     src: ip_forward
     dest: /proc/sys/net/ipv4/ip_forward
-  when: machine  == "management" and iptables_setup | bool
+  when: machine  == "management"
 
 - name: Copy over controller-cloud-init.example
   copy:

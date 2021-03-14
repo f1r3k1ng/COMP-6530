@@ -4,13 +4,7 @@ username: group10
 password: p@ssw0rd
 
 user_update: true
-bashrc_update: true
-sshd_update: true
-iptables_flush: true
-iptables_setup: true
-gateway_setup: true
-bridge_setup: true
-
+nat: true
 veth: true
 
 management_ip: "20.0.0.10"
