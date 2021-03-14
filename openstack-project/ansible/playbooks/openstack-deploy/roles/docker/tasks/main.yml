@@ -49,23 +49,18 @@
     groups: docker
     append: yes
 
-- name: Copy over the registry-daemon.json to change the mtu
-  copy:
-    src: registry-daemon.json
-    dest: /etc/docker/daemon.json
-  when: machine == "management"
-
 - name: Copy over daemon.json to add registry
   copy:
     src: daemon.json
     dest: /etc/docker/daemon.json
-  when: machine != "management"
+  register: docker
 
 - name: Restart docker
   systemd:
     name: docker
     daemon-reload: yes
     state: restarted
+  when: docker.changed | bool
 
 - name: Setup docker registry
   docker_container:

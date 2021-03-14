@@ -50,11 +50,13 @@
   copy:
     src: sshd_config
     dest: /etc/ssh/sshd_config
+  register: ssh
 
 - name: Restarting sshd
   service:
     name: sshd
     state: restarted
+  when: ssh.changed | bool
 
 - name: Flush iptables
   iptables:
