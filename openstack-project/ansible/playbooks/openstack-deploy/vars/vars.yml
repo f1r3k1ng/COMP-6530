@@ -7,4 +7,16 @@ user_update: false
 nat: false
 veth: false
 
+management: "10"
+controller: "20"
+compute: "30"
+storage: "40"
+
+group: "10"
+
+volume1: "062856f1-df31-464f-be44-9ad0c6f4b6e8"
+volume2: "a0d21a59-dfc5-499b-b9f6-e5cc2eb8888b"
+volume3: "59b688ea-4731-47e9-99c0-3a0b0ab11c0d"
+volume4: "2bc9a86a-dfce-4e57-ab13-cd2388446e6d"
+
 management_ip: "20.0.0.10"

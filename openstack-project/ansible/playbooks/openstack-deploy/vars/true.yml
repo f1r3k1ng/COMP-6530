@@ -7,4 +7,11 @@ user_update: true
 nat: true
 veth: true
 
+management: "10"
+controller: "20"
+compute: "30"
+storage: "40"
+
+group: "10"
+
 management_ip: "20.0.0.10"

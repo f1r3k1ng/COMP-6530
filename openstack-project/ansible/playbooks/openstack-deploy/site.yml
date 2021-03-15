@@ -9,9 +9,11 @@
     - "vars/vars.yml"
 
   roles:
-    - machine_setup
-    - update
-    - veth
-    - docker
+#    - machine_setup
+#    - update
+#    - veth
+#    - docker
+    - ceph
+#    - dns
 
 ...

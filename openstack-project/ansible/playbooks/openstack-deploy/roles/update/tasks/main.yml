@@ -25,6 +25,8 @@
       - git
       - ansible
       - mlocate
+      - bind9
+      - dnsutils
     state: latest
 
 ... 

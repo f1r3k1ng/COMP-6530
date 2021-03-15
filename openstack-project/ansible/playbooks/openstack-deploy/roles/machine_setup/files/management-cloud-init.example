@@ -9,30 +9,29 @@
 # network: {config: disabled}
 network:
     version: 2
-    bridges:
-        br0:
-            interfaces: [ens3]
-            addresses: [20.0.0.20/24]
-            gateway4: 20.0.0.10
-            mtu: 1400
-            nameservers: 
-                addresses: [20.0.0.10]
-                search: [group10, cloud.group10]
     ethernets:
         ens3:
-            macaddress: fa:16:3e:fd:49:fb
+            dhcp4: true
+            addresses: [10.0.0.10/24]
+            match:
+                macaddress: fa:16:3e:61:ed:90
+            mtu: 1400
+            set-name: ens3
+            nameservers:
+                addresses: [20.0.0.10]
+                search: [group10, cloud.group10]
         ens4:
             dhcp4: true
-            addresses: [30.0.0.20/24]
+            addresses: [20.0.0.10/24]
             match:
-                macaddress: fa:16:3e:11:fe:ba
+                macaddress: fa:16:3e:84:9f:30
             mtu: 1400
             set-name: ens4
         ens5:
             dhcp4: true
-            addresses: [40.0.0.20/24]
+            addresses: [30.0.0.10/24]
             match:
-                macaddress: fa:16:3e:6d:7d:ae
+                macaddress: fa:16:3e:d8:47:52
             mtu: 1400
             set-name: ens5
 

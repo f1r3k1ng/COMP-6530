@@ -87,6 +87,12 @@
     dest: /proc/sys/net/ipv4/ip_forward
   when: machine  == "management"
 
+- name: Copy over management-cloud-init.example
+  copy:
+    src: management-cloud-init.example
+    dest: /etc/netplan/cloud-init.example
+  when: machine == "management"
+
 - name: Copy over controller-cloud-init.example
   copy:
     src: controller-cloud-init.example

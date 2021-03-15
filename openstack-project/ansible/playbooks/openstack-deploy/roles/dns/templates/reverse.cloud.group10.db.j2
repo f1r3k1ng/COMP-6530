@@ -1,0 +1,17 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	management.cloud.group{{ group }}.	hostmaster.cloud.group{{ group }}. 	(
+			     11
+			 604800	
+			  86400
+			2419200
+			 604800 )
+
+	IN	NS	management.cloud.group{{ group }}.
+
+{{ management }}	IN	PTR	management.cloud.group{{ group }}.
+{{ controller }}	IN	PTR	controller.cloud.group{{ group }}.
+{{ compute }}	IN	PTR	compute.cloud.group{{ group }}.
+{{ storage }}	IN	PTR	storage.cloud.group{{ group }}.
