@@ -9,8 +9,9 @@
     - "vars/vars.yml"
 
   roles:
-#    - machine_setup
-#    - update
+    - setup
+    - update
+    - nat
 #    - veth
 #    - docker
     - ceph

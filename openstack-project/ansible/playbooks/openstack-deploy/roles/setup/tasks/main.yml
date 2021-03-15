@@ -1,0 +1,103 @@
+---
+
+- name: Change root user password
+  user:
+    name: root
+    password: "{{ password | password_hash('sha512') }}"
+    state: present 
+  when: user_update | bool 
+
+- name: Update root user .bashrc file
+  copy:
+    src: bashrc
+    dest: /root/.bashrc
+    owner: root
+
+- name: Change ubuntu user password
+  user:
+    name: ubuntu
+    password: "{{ password | password_hash('sha512') }}"
+    state: present
+  when: user_update | bool
+
+- name: Update ubuntu user .bashrc file
+  copy:
+    src: bashrc
+    dest: /home/ubuntu/.bashrc
+    owner: ubuntu
+
+- name: Add user {{ username }}
+  user:
+    name: "{{ username }}"
+    shell: /bin/bash
+    group: sudo
+    password: "{{ password | password_hash('sha512') }}"
+    state: present 
+  when: user_update | bool
+
+- name: Update {{ username }} user .bashrc file
+  copy:
+    src: bashrc
+    dest: "/home/{{ username }}/.bashrc"
+    owner: "{{ username }}"
+
+- name: Set correct timezone
+  timezone:
+    name: America/Chicago
+    hwclock: local
+
+- name: Copy over private ssh key to root
+  copy:
+    src: /home/ubuntu/.ssh/id_rsa
+    dest: /root/.ssh/id_rsa
+    mode: 400
+  ignore_errors: yes
+  
+- name: Copy over private ssh key to ubuntu user
+  copy:
+    src: /home/ubuntu/.ssh/id_rsa
+    dest: /home/ubuntu/.ssh/id_rsa
+    mode: 400
+  ignore_errors: yes
+  when: machine != "management"
+
+- name: Copy over public ssh key to root
+  copy:
+    src: /home/ubuntu/.ssh/id_rsa.pub
+    dest: /root/.ssh/id_rsa.pub
+  ignore_errors: yes
+
+- name: Copy over public ssh key to ubuntu user
+  copy:
+    src: /home/ubuntu/.ssh/id_rsa.pub
+    dest: /home/ubuntu/.ssh/id_rsa.pub
+  ignore_errors: yes
+  when: machine != "management"
+
+- name: Copy over authorized_keys to root
+  copy:
+    src: /home/ubuntu/.ssh/authorized_keys
+    dest: /root/.ssh/authorized_keys
+  ignore_errors: yes
+
+- name: Copy over authorized_keys to ubuntu user
+  copy:
+    src: /home/ubuntu/.ssh/authorized_keys
+    dest: /home/ubuntu/.ssh/authorized_keys
+  ignore_errors: yes
+  when: machine != "management"
+
+- name: Update the sshd config
+  copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+  register: ssh
+
+- name: Restarting sshd
+  service:
+    name: sshd
+    state: restarted
+  when: ssh.changed | bool
+
+...
+

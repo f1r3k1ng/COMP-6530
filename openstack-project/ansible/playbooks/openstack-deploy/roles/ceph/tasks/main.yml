@@ -23,7 +23,7 @@
 - name: Copy over var file
   copy:
     src: all.yml
-    dest: /hom/ubuntu/test/ceph-ansible/group_vars/all.yml
+    dest: /home/ubuntu/test/ceph-ansible/group_vars/all.yml
   when: machine == "management" 
 
 ...

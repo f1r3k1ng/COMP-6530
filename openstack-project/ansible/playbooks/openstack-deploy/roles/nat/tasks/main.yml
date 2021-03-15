@@ -1,63 +1,5 @@
 ---
 
-- name: Change root user password
-  user:
-    name: root
-    password: "{{ password | password_hash('sha512') }}"
-    state: present 
-  when: user_update | bool 
-
-- name: Update root user .bashrc file
-  copy:
-    src: bashrc
-    dest: /root/.bashrc
-    owner: root
-
-- name: Change ubuntu user password
-  user:
-    name: ubuntu
-    password: "{{ password | password_hash('sha512') }}"
-    state: present
-  when: user_update | bool
-
-- name: Update ubuntu user .bashrc file
-  copy:
-    src: bashrc
-    dest: /home/ubuntu/.bashrc
-    owner: ubuntu
-
-- name: Add user {{ username }}
-  user:
-    name: "{{ username }}"
-    shell: /bin/bash
-    group: sudo
-    password: "{{ password | password_hash('sha512') }}"
-    state: present 
-  when: user_update | bool
-
-- name: Update {{ username }} user .bashrc file
-  copy:
-    src: bashrc
-    dest: "/home/{{ username }}/.bashrc"
-    owner: "{{ username }}"
-
-- name: Set correct timezone
-  timezone:
-    name: America/Chicago
-    hwclock: local
-
-- name: Update the sshd config
-  copy:
-    src: sshd_config
-    dest: /etc/ssh/sshd_config
-  register: ssh
-
-- name: Restarting sshd
-  service:
-    name: sshd
-    state: restarted
-  when: ssh.changed | bool
-
 - name: Flush iptables
   iptables:
     flush: yes
@@ -119,4 +61,4 @@
   wait_for:
     timeout: 10
 ...
-
+                                     
