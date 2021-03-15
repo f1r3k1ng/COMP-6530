@@ -50,14 +50,18 @@
   copy:
     src: /home/ubuntu/.ssh/id_rsa
     dest: /root/.ssh/id_rsa
-    mode: 400
+    group: root
+    owner: root
+    mode: 0600
   ignore_errors: yes
   
 - name: Copy over private ssh key to ubuntu user
   copy:
     src: /home/ubuntu/.ssh/id_rsa
     dest: /home/ubuntu/.ssh/id_rsa
-    mode: 400
+    group: ubuntu
+    owner: ubuntu
+    mode: 0600
   ignore_errors: yes
   when: machine != "management"
 
@@ -71,6 +75,8 @@
   copy:
     src: /home/ubuntu/.ssh/id_rsa.pub
     dest: /home/ubuntu/.ssh/id_rsa.pub
+    group: ubuntu
+    owner: ubuntu
   ignore_errors: yes
   when: machine != "management"
 
@@ -84,6 +90,23 @@
   copy:
     src: /home/ubuntu/.ssh/authorized_keys
     dest: /home/ubuntu/.ssh/authorized_keys
+    group: ubuntu
+    owner: ubuntu
+  ignore_errors: yes
+  when: machine != "management"
+
+- name: Copy over ssh config file to root
+  copy:
+    src: /home/ubuntu/.ssh/config
+    dest: /root/.ssh/
+  ignore_errors: yes
+
+- name: Copy over ssh config file to ubuntu user
+  copy:
+    src: /home/ubuntu/.ssh/config
+    dest: /home/ubuntu/.ssh/
+    group: ubuntu
+    owner: ubuntu
   ignore_errors: yes
   when: machine != "management"
 

@@ -13,8 +13,8 @@
     - update
     - nat
 #    - veth
-#    - docker
-    - ceph
+    - docker
+      #    - ceph
 #    - dns
 
 ...

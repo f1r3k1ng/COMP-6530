@@ -62,6 +62,9 @@
     state: restarted
   when: docker.changed | bool
 
+- name: Set docker0 interface mtu
+  shell: ip link set dev docker0 mtu 1400
+
 - name: Setup docker registry
   docker_container:
     name: registry
