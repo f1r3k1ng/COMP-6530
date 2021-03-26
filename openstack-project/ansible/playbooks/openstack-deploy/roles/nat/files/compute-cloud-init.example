@@ -16,7 +16,8 @@ network:
             gateway4: 20.0.0.10
             mtu: 1400
             nameservers:
-                addresses: [8.8.8.8]
+                addresses: [20.0.0.10]
+                search: [group10, cloud.group10]
     ethernets:
         ens3:
             macaddress: fa:16:3e:39:f1:cd

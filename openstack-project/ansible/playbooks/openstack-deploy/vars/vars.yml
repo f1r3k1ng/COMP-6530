@@ -3,9 +3,9 @@ update: true
 username: group10
 password: p@ssw0rd
 
-user_update: false
-nat: false
-veth: false
+user_update: true
+nat: true
+veth: true
 
 management: "10"
 controller: "20"
@@ -20,3 +20,5 @@ volume3: "59b688ea-4731-47e9-99c0-3a0b0ab11c0d"
 volume4: "2bc9a86a-dfce-4e57-ab13-cd2388446e6d"
 
 management_ip: "20.0.0.10"
+
+tag: "ussuri"

@@ -5,23 +5,23 @@
     flush: yes
   when: machine == "management" and nat | bool
 
-- name: Setup forwarding in iptables
-  iptables:
-    chain: FORWARD
-    in_interface: ens4
-    out_interface: ens3
-    match: state
-    ctstate: RELATED,ESTABLISHED
-    jump: ACCEPT
-  when: machine == "management" and nat | bool
+- name: Copy over iptables config
+  copy:
+    src: iptables-config
+    dest: /tmp/
+  when: machine == "management"
 
-- name: Setup nat in iptables
-  iptables:
-    table: nat
-    chain: POSTROUTING
-    out_interface: ens4
-    jump: MASQUERADE
-  when: machine == "management" and nat | bool
+- name: Setup iptables
+  community.general.iptables_state:
+    state: restored
+    path: /tmp/iptables-config
+  when: machine == "management"
+  
+- name: Delete iptables-config
+  file:
+    path: /tmp/iptables-config
+    state: absent
+  when: machine == "management"
 
 - name: Enabling packet forwarding
   copy:
@@ -53,12 +53,5 @@
     dest: /etc/netplan/cloud-init.example
   when: machine == "storage"
 
-- name: Print information
-  debug:
-    msg: "You should now go into the remote host and add the bridge to /etc/netplan/cloud-init.yml, an example template has been copied to the same location for you to follow"
-
-- name: Wait for 10 seconds
-  wait_for:
-    timeout: 10
 ...
                                      

@@ -15,7 +15,7 @@ network:
             addresses: [20.0.0.20/24]
             gateway4: 20.0.0.10
             mtu: 1400
-            nameservers: 
+            nameservers:
                 addresses: [20.0.0.10]
                 search: [group10, cloud.group10]
     ethernets:

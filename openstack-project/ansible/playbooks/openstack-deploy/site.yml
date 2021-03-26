@@ -9,12 +9,13 @@
     - "vars/vars.yml"
 
   roles:
-    - setup
-    - update
-    - nat
-#    - veth
-    - docker
-      #    - ceph
-#    - dns
-
+#   - setup
+#   - update
+#   - nat
+#   - veth
+#   - docker
+#   - ceph
+#   - dns
+#   - docker-images
+    - pyenv
 ...

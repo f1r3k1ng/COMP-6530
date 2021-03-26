@@ -1,0 +1,21 @@
+---
+
+- name: Pull all images
+  community.docker.docker_image:
+    name: "{{ item }}"
+    tag: "{{ tag }}"
+    source: pull
+  with_items: "{{ image }}"
+  when: machine == "management"
+  register: pull
+
+- name: Tag all images
+  shell: 'docker tag "{{ item }}":"{{ tag }}" 20.0.0.10:4000/"{{ item }}":"{{ tag }}"'
+  with_items: "{{ image }}"
+  when: machine == "management" and pull.changed | bool
+
+- name: Push images to a local registry
+  shell: 'docker push 20.0.0.10:4000/"{{ item }}":"{{ tag }}"'
+  with_items: "{{ image }}"
+  when: machine == "management" and pull.changed | bool
+...

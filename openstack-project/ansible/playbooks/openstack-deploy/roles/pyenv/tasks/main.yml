@@ -1,0 +1,19 @@
+---
+
+- name: Create a virtual environment on management
+  pip:
+    name:
+      - ansible
+      - wheel
+      - kolla-ansible==10.2.0
+    virtualenv: /home/ubuntu/virtualenv
+    virtualenv_python: python3.8
+  when: machine == "management"
+
+- name: Create a virtual environment on other machines
+  pip:
+    name:
+      - ansible
+    virtualenv: /home/ubuntu/virtualenv
+  when: machine != "management"
+...

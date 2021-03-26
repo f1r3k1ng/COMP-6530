@@ -4,26 +4,26 @@
   git:
     repo: "https://github.com/ceph/ceph-ansible.git"
     clone: yes
-    dest: /home/ubuntu/test/ceph-ansible
+    dest: /tmp/ceph-ansible
     version: stable-5.0
   when: machine == "management"
 
 - name: Copy over hosts file
   template:
     src: hosts
-    dest: /home/ubuntu/test/ceph-ansible/hosts
+    dest: /tmp/ceph-ansible/hosts
   when: machine == "management"
 
 - name: Copy over site.yml file
   copy:
     src: site.yml
-    dest: /home/ubuntu/test/ceph-ansible/site.yml
+    dest: /tmp/ceph-ansible/site.yml
   when: machine == "management"
 
 - name: Copy over var file
   copy:
     src: all.yml
-    dest: /home/ubuntu/test/ceph-ansible/group_vars/all.yml
+    dest: /tmp/ceph-ansible/group_vars/all.yml
   when: machine == "management" 
 
 ...

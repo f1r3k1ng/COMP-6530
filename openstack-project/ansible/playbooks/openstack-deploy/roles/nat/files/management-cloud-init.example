@@ -13,6 +13,7 @@ network:
         ens3:
             dhcp4: true
             addresses: [10.0.0.10/24]
+            gateway4: 10.0.0.1
             match:
                 macaddress: fa:16:3e:61:ed:90
             mtu: 1400

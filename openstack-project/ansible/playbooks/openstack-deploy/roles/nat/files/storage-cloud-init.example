@@ -9,14 +9,14 @@
 # network: {config: disabled}
 network:
     version: 2
-    bridges:
-        br0:
-            mtu: 1400
     ethernets:
         ens3:
             dhcp4: true
             addresses: [20.0.0.40/24]
             gateway4: 20.0.0.10
+            nameservers:
+                addresses: [20.0.0.10]
+                search: [group10, cloud.group10]
             match:
                 macaddress: fa:16:3e:77:03:3b
             mtu: 1400

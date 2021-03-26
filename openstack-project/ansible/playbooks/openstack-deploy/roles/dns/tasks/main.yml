@@ -19,8 +19,8 @@
 
 - name: Restart bind9
   service:
-    name: bin9
+    name: bind9
     state: restarted
     enabled: yes
-  when: bind.changed | bool
+  when: bind.changed | bool and machine == "management"
 ...
