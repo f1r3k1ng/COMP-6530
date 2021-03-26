@@ -1,5 +1,13 @@
 ---
 
+- name: Ensure hosts file is correct
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 644
+
 - name: Change root user password
   user:
     name: root

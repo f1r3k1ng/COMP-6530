@@ -1,0 +1,37 @@
+- name: Set the pool min size
+  shell: ceph config set global osd_pool_default_min_size 1
+  when: machine == "controller"
+  ignore_errors: yes
+
+- name: Set pool size
+  shell: ceph config set global osd_pool_default_size 1
+  when: machine == "controller"
+  ignore_errors: yes
+
+- name: Create ceph volumes pool
+  shell: ceph osd pool create volumes
+  when: machine == "controller"
+  register: volumes
+  ignore_errors: yes
+  
+- name: Create ceph images pool
+  shell: ceph osd pool create images
+  when: machine == "controller"
+  register: images
+  ignore_errors: yes
+
+- name: Create ceph backups pool
+  shell: ceph osd pool create backups
+  when: machine == "controller"
+  register: backups
+  ignore_errors: yes
+
+- name: Create ceph vms pool
+  shell: ceph osd pool create vms
+  when: machine == "controller"
+  register: vms
+  ignore_errors: yes
+
+- name: Test
+  debug:
+    msg: "{{ vms }}"
